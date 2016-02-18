@@ -8,10 +8,6 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * User: Sanzhar Aubakirov
- * Date: 2/18/16
- */
 public class Teaser {
     private static final String teaserTitle = "Привет Хабр!";
     private static final String teaserBody = "Это демонстрация работы простейшего нечёткого поиска";

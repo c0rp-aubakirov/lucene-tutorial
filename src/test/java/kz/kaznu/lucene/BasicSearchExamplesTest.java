@@ -15,10 +15,6 @@ import java.util.Random;
 
 import static org.junit.Assert.*;
 
-/**
- * User: Sanzhar Aubakirov
- * Date: 2/18/16
- */
 public class BasicSearchExamplesTest {
     private final Random rnd = new Random(); // to generate safe name for index folder. After tests we removing folders
     private final MessageIndexer indexer = new MessageIndexer(Constants.TMP_DIR + "/tutorial_test" + rnd.nextInt());

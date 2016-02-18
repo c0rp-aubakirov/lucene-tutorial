@@ -3,10 +3,6 @@ package kz.kaznu.lucene.model;
 import kz.kaznu.lucene.index.MessageToDocument;
 import org.apache.lucene.document.Document;
 
-/**
- * User: Sanzhar Aubakirov
- * Date: 2/18/16
- */
 public class Message {
     private String body;
     private String title;

@@ -7,10 +7,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
-/**
- * User: Sanzhar Aubakirov
- * Date: 2/18/16
- */
 public class HelperTest {
 
     @Test

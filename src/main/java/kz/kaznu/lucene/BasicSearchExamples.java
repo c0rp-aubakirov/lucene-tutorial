@@ -9,10 +9,6 @@ import org.apache.lucene.search.*;
 
 import java.io.IOException;
 
-/**
- * User: Sanzhar Aubakirov
- * Date: 2/18/16
- */
 public class BasicSearchExamples {
     public static final int DEFAULT_LIMIT = 10;
     private final IndexReader reader;

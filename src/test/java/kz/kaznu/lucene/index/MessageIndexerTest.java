@@ -12,10 +12,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Random;
 
-/**
- * User: Sanzhar Aubakirov
- * Date: 2/18/16
- */
 public class MessageIndexerTest {
     private final Random rnd = new Random(); // to generate safe name for index folder. After tests we removing folders
 
