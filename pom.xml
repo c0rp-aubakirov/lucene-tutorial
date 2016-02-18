@@ -43,6 +43,13 @@
       <version>2.4</version>
     </dependency>
 
+    <!--Gson to read data from tutorial.json file-->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.5</version>
+    </dependency>
+
   </dependencies>
 
   <build>
