@@ -3,7 +3,9 @@ package kz.kaznu.lucene;
 import kz.kaznu.lucene.constants.Constants;
 import kz.kaznu.lucene.index.MessageIndexer;
 import kz.kaznu.lucene.utils.Helper;
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.document.Document;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -58,5 +60,10 @@ public class BasicSearchExamplesTest {
 
         final BasicSearchExamples searchWith = new BasicSearchExamples(indexer.readIndex());
         searchWith.fuzzySearch("дорога");
+    }
+
+    @After
+    public void removeIndexes() {
+        FileUtils.deleteQuietly(new File(indexer.getPathToIndexFolder())); // remove indexes
     }
 }
