@@ -23,12 +23,11 @@ public class Helper {
      * Read documents from the provided file.
      * Usual tutorial file is located in resources/tutorial.json
      *
-     * @param pathToFile path to JSON file
+     * @param file File that referred to JSON file
      * @return list of documents
      * @throws FileNotFoundException
      */
-    public static List<Document> readDocumentsFromFile(final String pathToFile) throws FileNotFoundException {
-        final File file = new File(pathToFile);
+    public static List<Document> readDocumentsFromFile(final File file) throws FileNotFoundException {
         final FileReader fileReader = new FileReader(file);
         final JsonReader reader = new JsonReader(fileReader);
         final List<Message> messages = gson.fromJson(reader, listType);
