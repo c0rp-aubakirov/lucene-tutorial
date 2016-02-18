@@ -123,7 +123,7 @@ public class BasicSearchExamples {
         for (ScoreDoc hit : hits) {
             final String title = reader.document(hit.doc).get("title");
             final String body = reader.document(hit.doc).get("body");
-            System.out.println("\n\ttitle = " + title + "\n\tbody = " + body);
+            System.out.println("\n\tDocument Id = " + hit.doc + "\n\ttitle = " + title + "\n\tbody = " + body);
         }
     }
 }
