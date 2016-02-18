@@ -22,7 +22,11 @@ import java.util.List;
 public class MessageIndexer {
     private final String pathToIndexFolder;
 
-    public MessageIndexer(String pathToIndexFolder) {
+    /**
+     * Get instance of MessageIndex providing path where indexes will be stored
+     * @param pathToIndexFolder File System path where indexes will be stored. For example /tmp/tutorial_indexes
+     */
+    public MessageIndexer(final String pathToIndexFolder) {
         this.pathToIndexFolder = pathToIndexFolder;
     }
 
