@@ -115,6 +115,11 @@ public class BasicSearchExamples {
     }
 
     private void showHits(final ScoreDoc[] hits) throws IOException {
+        if (hits.length == 0) {
+            System.out.println("\n\tНичего не найдено");
+            return;
+        }
+        System.out.println("\n\tРезультаты поиска:");
         for (ScoreDoc hit : hits) {
             final String title = reader.document(hit.doc).get("title");
             final String body = reader.document(hit.doc).get("body");
