@@ -1,4 +1,4 @@
-package ka.kaznu.lucene.index;
+package kz.kaznu.lucene.index;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;

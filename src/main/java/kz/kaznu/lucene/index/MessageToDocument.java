@@ -1,4 +1,4 @@
-package ka.kaznu.lucene.index;
+package kz.kaznu.lucene.index;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
