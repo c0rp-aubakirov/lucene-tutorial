@@ -87,4 +87,8 @@ public class MessageIndexer {
         final Directory dir = FSDirectory.open(Paths.get(pathToIndexFolder));
         return DirectoryReader.open(dir);
     }
+
+    public String getPathToIndexFolder() {
+        return pathToIndexFolder;
+    }
 }

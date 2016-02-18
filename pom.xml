@@ -36,6 +36,12 @@
     </dependency>
     <!--Lucene libs end-->
 
+    <!--For basic IO operations-->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
 
   </dependencies>
 
