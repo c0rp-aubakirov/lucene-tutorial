@@ -30,7 +30,7 @@ public class TutorialRestController {
     public void message(@PathVariable("query") String query, HttpServletRequest request,
                         HttpServletResponse response) throws Exception {
         System.out.println("autocomplete_query = " + query);
-        final List<Autocomplete> autocomplete = indexesBean.autocomplete().fuzzySearch(query, 2);
+        final List<Autocomplete> autocomplete = indexesBean.autocomplete().withTermQuery(query);
         final String json = gson.toJson(autocomplete);
         response.getWriter().write(json);
     }

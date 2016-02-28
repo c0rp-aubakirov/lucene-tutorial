@@ -14,6 +14,6 @@ public class HelperTest {
         final ClassLoader classLoader = getClass().getClassLoader();
         final File file = new File(classLoader.getResource("tutorial.json").getFile());
         final List<Document> documents = Helper.readDocumentsFromFile(file);
-        Assert.assertEquals("Should successfully read 17 documents", 17, documents.size());
+        Assert.assertEquals("Should successfully read 18 documents", 18, documents.size());
     }
 }
