@@ -2,6 +2,7 @@ package kz.kaznu.web.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import kz.kaznu.lucene.model.Autocomplete;
 import kz.kaznu.web.bean.IndexesBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +30,7 @@ public class TutorialRestController {
     public void message(@PathVariable("query") String query, HttpServletRequest request,
                         HttpServletResponse response) throws Exception {
         System.out.println("query = " + query);
-        final List<String> autocomplete = indexesBean.autocomplete().withTermQuery(query);
+        final List<Autocomplete> autocomplete = indexesBean.autocomplete().withTermQuery(query);
         final String json = gson.toJson(autocomplete);
         response.getWriter().write(json);
     }

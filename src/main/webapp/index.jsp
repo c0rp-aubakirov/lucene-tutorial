@@ -10,33 +10,11 @@
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
     <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            var autocomplete = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                remote: {
-                    url: '../api/autocomplete/%QUERY',
-                    wildcard: '%QUERY'
-                }
-            });
-
-            autocomplete.initialize();
-
-            $('#remote .typeahead').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            }, {
-                name: 'body',
-                display: 'body',
-                source: autocomplete
-            });
-        });
-    </script>
+    <script src="${pageContext.request.contextPath}/resources/js/typeahead.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/typeahead.css" type="text/css"/>
 </head>
 <body class="container">
-<div class="col-md-2 col-md-offset-5 form-group" id="remote">
+<div class="col-md-4 col-md-offset-3 form-group" id="remote">
     <label for="search" class="control-label"></label>
     <input type="text" class="form-control typeahead"
            autocomplete="off" spellcheck="false"

@@ -6,11 +6,14 @@ package kz.kaznu.web.bean;
  */
 
 import kz.kaznu.lucene.AutocompleteExamples;
+import kz.kaznu.lucene.analyzer.CustomizableRussianAnalyzer;
 import kz.kaznu.lucene.constants.Constants;
 import kz.kaznu.lucene.index.MessageIndexer;
 import kz.kaznu.lucene.index.MessageToDocument;
 import kz.kaznu.lucene.utils.Helper;
 import org.apache.commons.io.FileUtils;
+import org.apache.lucene.analysis.ngram.EdgeNGramTokenizer;
+import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.DocIdSetIterator;
@@ -47,7 +50,10 @@ public class IndexesBean {
                 .map(entry -> MessageToDocument.createAutocompleteWith(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
-        autocompleteIndexer.index(true, autocompletes);
+        final CustomizableRussianAnalyzer analyzer = new CustomizableRussianAnalyzer(
+                new EdgeNGramTokenizer(1, 20)).ifNeedRemoveShort(false).ifNeedStemming(false);
+        autocompleteIndexer.index(true, autocompletes,
+                                  analyzer);
 
         autocomplete = new AutocompleteExamples(autocompleteIndexer.readIndex());
     }
