@@ -14,6 +14,7 @@ import kz.kaznu.lucene.utils.Helper;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.ngram.EdgeNGramTokenizer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
+import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.DocIdSetIterator;
@@ -41,7 +42,11 @@ public class IndexesBean {
     public IndexesBean() throws IOException {
         final ClassLoader classLoader = getClass().getClassLoader();
         final File file = new File(classLoader.getResource("tutorial.json").getFile());
-        msgIndexer.index(true, Helper.readDocumentsFromFile(file)); // create messages index
+        final CustomizableRussianAnalyzer msgAnalyzer = new CustomizableRussianAnalyzer().ifNeedStemming(false);
+        final ShingleAnalyzerWrapper wrapper = new ShingleAnalyzerWrapper(msgAnalyzer, 2, 3, " ", true, false,
+                                                                                   "");
+        msgIndexer.index(true, Helper.readDocumentsFromFile(file),
+                         wrapper); // create messages index
 
         final Map<String, Double> allTermMap = initAutocompleteDictionary(msgIndexer.readIndex());
         // get list of documents from terms

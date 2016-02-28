@@ -10,9 +10,7 @@ import org.apache.lucene.search.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static kz.kaznu.lucene.constants.Constants.DEFAULT_LIMIT;
 
@@ -40,7 +38,7 @@ public class AutocompleteExamples {
                 .ifNeedRemoveShort(false)
                 .ifNeedStemming(false));
         final Query query = queryParser.parse(toSearch);
-        final Sort sortByScore = new Sort(new SortField(SCORE_FIELD, SortField.Type.DOUBLE)); // sort by tfidf
+        final Sort sortByScore = new Sort(new SortField(SCORE_FIELD, SortField.Type.DOUBLE, true)); // sort by tfidf
         final TopDocs search = indexSearcher.search(query, SEARCH_LIMIT, sortByScore);
         final ScoreDoc[] hits = search.scoreDocs;
 
