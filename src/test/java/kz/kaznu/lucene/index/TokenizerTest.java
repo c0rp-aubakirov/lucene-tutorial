@@ -32,7 +32,7 @@ public class TokenizerTest {
         final MessageIndexer indexer = new MessageIndexer("/tmp/ngram_index");
 
         // Key point of this test. Creating Analyzer with NGramTokenizer.
-        final Analyzer analyzer = new CustomizableRussianAnalyzer(new NGramTokenizer(2, 15)).ifNeedRemoveShort(false);
+        final Analyzer analyzer = new CustomizableRussianAnalyzer(new NGramTokenizer(2, 15)).ifNeedLengthFilter(false);
 
         indexer.index(true, ngram, analyzer);
         System.out.println(getAllTermsFromIndex(indexer.readIndex()));
@@ -46,7 +46,7 @@ public class TokenizerTest {
         final MessageIndexer indexer = new MessageIndexer("/tmp/edge_ngram_index");
 
         // Key point of this test. Creating Analyzer with EdgeNGramTokenizer.
-        final Analyzer analyzer = new CustomizableRussianAnalyzer(new EdgeNGramTokenizer(2, 15)).ifNeedRemoveShort(false);
+        final Analyzer analyzer = new CustomizableRussianAnalyzer(new EdgeNGramTokenizer(2, 15)).ifNeedLengthFilter(false);
 
         indexer.index(true, edgeNgram, analyzer);
         System.out.println(getAllTermsFromIndex(indexer.readIndex()));

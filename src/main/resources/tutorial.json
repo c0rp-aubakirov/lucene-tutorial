@@ -337,5 +337,19 @@
     ],
     "creationDate": "Feb 7, 2016 11:50:31 AM",
     "lastChange": "Feb 7, 2016 11:50:31 AM"
+  },
+  {
+    "elasticSearchId": "",
+    "date": "Feb 7, 2016 12:00:00 AM",
+    "title": "Тестовое сообщения для хабра",
+    "URL": "http://kaznu.kz",
+    "tags": [],
+    "type": "NEWS",
+    "notificationId": 150936723,
+    "body": "Это сообщение для красивого скриншота. Привет хабрахабр. вприет харбрабра. храбраб зарзаб Хабра хабр привьею. Habrahabr habrahabr hello world",
+    "lang": "RU",
+    "region": [ ],
+    "creationDate": "Feb 7, 2016 11:50:31 AM",
+    "lastChange": "Feb 7, 2016 11:50:31 AM"
   }
 ]

@@ -11,9 +11,8 @@ import kz.kaznu.lucene.constants.Constants;
 import kz.kaznu.lucene.index.MessageIndexer;
 import kz.kaznu.lucene.index.MessageToDocument;
 import kz.kaznu.lucene.utils.Helper;
-import org.apache.commons.io.FileUtils;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ngram.EdgeNGramTokenizer;
-import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
@@ -21,10 +20,8 @@ import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.similarities.DefaultSimilarity;
 import org.apache.lucene.search.similarities.TFIDFSimilarity;
 import org.apache.lucene.util.BytesRef;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
@@ -44,10 +41,10 @@ public class IndexesBean {
         final File file = new File(classLoader.getResource("tutorial.json").getFile());
 
         /**
-         * We are using custom analyzer.
-         * For autocomplete we do not need stemming and we want N-grams be indexed
+         * We are using custom analyzer to prepare messages index
+         * We do not need stemming and we want N-grams (2 and 3) to be indexed
          */
-        final CustomizableRussianAnalyzer msgAnalyzer = new CustomizableRussianAnalyzer().ifNeedStemming(false);
+        final Analyzer msgAnalyzer = new CustomizableRussianAnalyzer().ifNeedStemming(false);
         final ShingleAnalyzerWrapper wrapper = new ShingleAnalyzerWrapper(msgAnalyzer, 2, 3, " ", true, false, "");
 
         msgIndexer.index(true, Helper.readDocumentsFromFile(file), wrapper); // create messages index
@@ -60,10 +57,12 @@ public class IndexesBean {
                 .collect(Collectors.toList());
 
         /**
-         *
+         * We use EdgeNgramTokenizer to build autocomplete index, not removing short terms and not stemming
+         * See TokenizerTest to understand difference between NGram tokenizers
          */
-        final CustomizableRussianAnalyzer analyzer = new CustomizableRussianAnalyzer(
-                new EdgeNGramTokenizer(1, 20)).ifNeedRemoveShort(false).ifNeedStemming(false);
+        final Analyzer analyzer = new CustomizableRussianAnalyzer(new EdgeNGramTokenizer(1, 20))
+                .ifNeedLengthFilter(false)
+                .ifNeedStemming(false);
         autocompleteIndexer.index(true, autocompletes,
                                   analyzer);
 
@@ -72,8 +71,8 @@ public class IndexesBean {
 
     @PreDestroy
     private void clearIndexFolders() {
-        FileUtils.deleteQuietly(new File(msgIndexer.getPathToIndexFolder())); // remove indexes
-        FileUtils.deleteQuietly(new File(autocompleteIndexer.getPathToIndexFolder())); // remove indexes
+        msgIndexer.deleteIndexFolder();
+        autocompleteIndexer.deleteIndexFolder();
     }
 
     /**

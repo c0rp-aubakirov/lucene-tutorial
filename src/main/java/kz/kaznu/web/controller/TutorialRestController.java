@@ -29,8 +29,8 @@ public class TutorialRestController {
     @RequestMapping(value = "/autocomplete/{query}", method = RequestMethod.GET)
     public void message(@PathVariable("query") String query, HttpServletRequest request,
                         HttpServletResponse response) throws Exception {
-        System.out.println("query = " + query);
-        final List<Autocomplete> autocomplete = indexesBean.autocomplete().withTermQuery(query);
+        System.out.println("autocomplete_query = " + query);
+        final List<Autocomplete> autocomplete = indexesBean.autocomplete().fuzzySearch(query, 2);
         final String json = gson.toJson(autocomplete);
         response.getWriter().write(json);
     }

@@ -129,7 +129,7 @@ public class CustomizableRussianAnalyzer extends StopwordAnalyzerBase {
         return this;
     }
 
-    public CustomizableRussianAnalyzer ifNeedRemoveShort(final Boolean ifNeedRemoveShort) {
+    public CustomizableRussianAnalyzer ifNeedLengthFilter(final Boolean ifNeedRemoveShort) {
         this.ifNeedRemoveShort = ifNeedRemoveShort;
         return this;
     }
