@@ -9,8 +9,9 @@ import org.apache.lucene.search.*;
 
 import java.io.IOException;
 
+import static kz.kaznu.lucene.constants.Constants.DEFAULT_LIMIT;
+
 public class BasicSearchExamples {
-    public static final int DEFAULT_LIMIT = 10;
     private final IndexReader reader;
 
     public BasicSearchExamples(IndexReader reader) {
@@ -19,13 +20,15 @@ public class BasicSearchExamples {
 
     /**
      * Search using TermQuery
-     * @param toSearch string to search
+     *
+     * @param toSearch    string to search
      * @param searchField field where to search. We have "body" and "title" fields
-     * @param limit how many results to return
+     * @param limit       how many results to return
      * @throws IOException
      * @throws ParseException
      */
-    public void searchIndexWithTermQuery(final String toSearch, final String searchField, final int limit) throws IOException, ParseException {
+    public void searchIndexWithTermQuery(final String toSearch, final String searchField,
+                                         final int limit) throws IOException, ParseException {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
         final Term term = new Term(searchField, toSearch);
@@ -49,8 +52,9 @@ public class BasicSearchExamples {
 
     /**
      * Search in body using QueryParser
+     *
      * @param toSearch string to search
-     * @param limit how many results to return
+     * @param limit    how many results to return
      * @throws IOException
      * @throws ParseException
      */
@@ -80,13 +84,15 @@ public class BasicSearchExamples {
 
     /**
      * Search using FuzzyQuery.
-     * @param toSearch string to search
+     *
+     * @param toSearch    string to search
      * @param searchField field where to search. We have "body" and "title" fields
-     * @param limit how many results to return
+     * @param limit       how many results to return
      * @throws IOException
      * @throws ParseException
      */
-    public void fuzzySearch(final String toSearch, final String searchField, final int limit) throws IOException, ParseException {
+    public void fuzzySearch(final String toSearch, final String searchField,
+                            final int limit) throws IOException, ParseException {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
         final Term term = new Term(searchField, toSearch);

@@ -1,8 +1,10 @@
 package kz.kaznu.lucene.index;
 
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.DoubleField;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.DocValuesType;
 import org.apache.lucene.index.IndexOptions;
 
 /**
@@ -48,15 +50,16 @@ public class MessageToDocument {
 
         final FieldType scoreField = new FieldType();
         scoreField.setTokenized(false);
+        scoreField.setDocValuesType(DocValuesType.NUMERIC);
         scoreField.setStored(true);
         scoreField.setNumericType(FieldType.NumericType.DOUBLE);
 
-        //index title
-        Field title = new Field("term", termString, textIndexedType);
+        //index term
+        Field term = new Field("term", termString, textIndexedType);
         //index score
-        Field score = new Field("scoreValue", String.valueOf(scoreValue), scoreField);
+        Field score = new DoubleField("scoreValue", scoreValue, scoreField);
 
-        document.add(title);
+        document.add(term);
         document.add(score);
         return document;
     }

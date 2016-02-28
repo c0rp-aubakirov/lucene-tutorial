@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "kz.kaznu.web.controller")
+@ComponentScan(basePackages = {"kz.kaznu.web.controller", "kz.kaznu.web.bean"})
 public class ApplicationContextConfig extends WebMvcConfigurerAdapter {
 
     @Bean(name = "viewResolver")

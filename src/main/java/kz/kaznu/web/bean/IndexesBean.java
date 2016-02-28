@@ -1,14 +1,16 @@
-package kz.kaznu.lucene.bean;
+package kz.kaznu.web.bean;
 
 /**
  * User: Sanzhar Aubakirov
  * Date: 2/28/16
  */
 
+import kz.kaznu.lucene.AutocompleteExamples;
 import kz.kaznu.lucene.constants.Constants;
 import kz.kaznu.lucene.index.MessageIndexer;
 import kz.kaznu.lucene.index.MessageToDocument;
 import kz.kaznu.lucene.utils.Helper;
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.DocIdSetIterator;
@@ -18,6 +20,8 @@ import org.apache.lucene.util.BytesRef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,8 +33,8 @@ import java.util.stream.Collectors;
 public class IndexesBean {
     private final MessageIndexer msgIndexer = new MessageIndexer(Constants.TMP_DIR + "/tutorial_messages");
     private final MessageIndexer autocompleteIndexer = new MessageIndexer(Constants.TMP_DIR + "/tutorial_autocomplete");
+    private final AutocompleteExamples autocomplete;
 
-    @Autowired
     public IndexesBean() throws IOException {
         final ClassLoader classLoader = getClass().getClassLoader();
         final File file = new File(classLoader.getResource("tutorial.json").getFile());
@@ -44,6 +48,14 @@ public class IndexesBean {
                 .collect(Collectors.toList());
 
         autocompleteIndexer.index(true, autocompletes);
+
+        autocomplete = new AutocompleteExamples(autocompleteIndexer.readIndex());
+    }
+
+    @PreDestroy
+    private void clearIndexFolders() {
+        FileUtils.deleteQuietly(new File(msgIndexer.getPathToIndexFolder())); // remove indexes
+        FileUtils.deleteQuietly(new File(autocompleteIndexer.getPathToIndexFolder())); // remove indexes
     }
 
     /**
@@ -80,6 +92,9 @@ public class IndexesBean {
         return allTermMap;
     }
 
+    public AutocompleteExamples autocomplete() {
+        return autocomplete;
+    }
 
     public MessageIndexer getAutocompleteIndexer() {
         return autocompleteIndexer;
