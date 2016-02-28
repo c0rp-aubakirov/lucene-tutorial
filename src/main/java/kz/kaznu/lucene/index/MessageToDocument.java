@@ -32,4 +32,32 @@ public class MessageToDocument {
         document.add(body);
         return document;
     }
+
+    /**
+     * Creates Lucene Document for autocomplete using two string and double: term and scoring value
+     *
+     * @return resulted document
+     */
+    public static Document createAutocompleteWith(final String termString, final Double scoreValue) {
+        final Document document = new Document();
+
+        final FieldType textIndexedType = new FieldType();
+        textIndexedType.setStored(true);
+        textIndexedType.setIndexOptions(IndexOptions.DOCS);
+        textIndexedType.setTokenized(true);
+
+        final FieldType scoreField = new FieldType();
+        scoreField.setTokenized(false);
+        scoreField.setStored(true);
+        scoreField.setNumericType(FieldType.NumericType.DOUBLE);
+
+        //index title
+        Field title = new Field("term", termString, textIndexedType);
+        //index score
+        Field score = new Field("scoreValue", String.valueOf(scoreValue), scoreField);
+
+        document.add(title);
+        document.add(score);
+        return document;
+    }
 }
