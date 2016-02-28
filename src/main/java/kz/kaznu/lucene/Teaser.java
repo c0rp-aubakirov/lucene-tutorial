@@ -2,9 +2,11 @@ package kz.kaznu.lucene;
 
 import kz.kaznu.lucene.index.MessageIndexer;
 import kz.kaznu.lucene.index.MessageToDocument;
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryparser.classic.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -24,5 +26,7 @@ public class Teaser {
         final String toSearch = reader.nextLine(); // Scans the next token
 
         search.fuzzySearch(toSearch);
+
+        indexer.deleteIndexFolder();
     }
 }

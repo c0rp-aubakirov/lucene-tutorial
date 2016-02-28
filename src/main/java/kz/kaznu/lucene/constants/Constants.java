@@ -10,4 +10,6 @@ public final class Constants {
 
     public static String TMP_DIR = System.getProperty("java.io.tmpdir");
     public static final int DEFAULT_LIMIT = 10;
+    public static final String AUTOCOMPLETE_SCORE_FIELD = "scoreValue";
+    public static final String AUTOCOMPLETE_FIELD = "term";
 }

@@ -42,19 +42,26 @@ public class IndexesBean {
     public IndexesBean() throws IOException {
         final ClassLoader classLoader = getClass().getClassLoader();
         final File file = new File(classLoader.getResource("tutorial.json").getFile());
+
+        /**
+         * We are using custom analyzer.
+         * For autocomplete we do not need stemming and we want N-grams be indexed
+         */
         final CustomizableRussianAnalyzer msgAnalyzer = new CustomizableRussianAnalyzer().ifNeedStemming(false);
-        final ShingleAnalyzerWrapper wrapper = new ShingleAnalyzerWrapper(msgAnalyzer, 2, 3, " ", true, false,
-                                                                                   "");
-        msgIndexer.index(true, Helper.readDocumentsFromFile(file),
-                         wrapper); // create messages index
+        final ShingleAnalyzerWrapper wrapper = new ShingleAnalyzerWrapper(msgAnalyzer, 2, 3, " ", true, false, "");
+
+        msgIndexer.index(true, Helper.readDocumentsFromFile(file), wrapper); // create messages index
 
         final Map<String, Double> allTermMap = initAutocompleteDictionary(msgIndexer.readIndex());
-        // get list of documents from terms
+        // get list of documents from terms dictionary
         final List<Document> autocompletes = allTermMap
                 .entrySet().stream()
                 .map(entry -> MessageToDocument.createAutocompleteWith(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
+        /**
+         *
+         */
         final CustomizableRussianAnalyzer analyzer = new CustomizableRussianAnalyzer(
                 new EdgeNGramTokenizer(1, 20)).ifNeedRemoveShort(false).ifNeedStemming(false);
         autocompleteIndexer.index(true, autocompletes,

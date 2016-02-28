@@ -1,5 +1,6 @@
 package kz.kaznu.lucene.index;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.document.Document;
@@ -10,6 +11,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -71,10 +73,22 @@ public class MessageIndexer {
      * @param create to decide create new or append to previous one
      * @throws IOException
      */
-    public void index(final Boolean create, Document document) throws IOException {
+    public void index(final Boolean create, final Document document) throws IOException {
         final List<Document> oneDocumentList = new ArrayList<>();
         oneDocumentList.add(document);
         index(create, oneDocumentList);
+    }
+
+    /**
+     * Indexing one document with analyzer
+     *
+     * @param create to decide create new or append to previous one
+     * @throws IOException
+     */
+    public void index(final Boolean create, final Document document, final Analyzer analyzer) throws IOException {
+        final List<Document> oneDocumentList = new ArrayList<>();
+        oneDocumentList.add(document);
+        index(create, oneDocumentList, analyzer);
     }
 
     /**
@@ -86,6 +100,13 @@ public class MessageIndexer {
     public IndexReader readIndex() throws IOException {
         final Directory dir = FSDirectory.open(Paths.get(pathToIndexFolder));
         return DirectoryReader.open(dir);
+    }
+
+    /**
+     * Use to clean up index folder
+     */
+    public void deleteIndexFolder() {
+        FileUtils.deleteQuietly(new File(pathToIndexFolder)); // remove indexes
     }
 
     public String getPathToIndexFolder() {
