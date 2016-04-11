@@ -50,6 +50,14 @@
       <version>2.4</version>
     </dependency>
 
+    <!-- For math operations with vectors-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.2</version>
+    </dependency>
+
+
     <!--Gson to read data from tutorial.json file-->
     <dependency>
       <groupId>com.google.code.gson</groupId>
