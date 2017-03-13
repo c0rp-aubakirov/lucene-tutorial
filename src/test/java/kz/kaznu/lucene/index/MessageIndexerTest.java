@@ -4,10 +4,10 @@ import kz.kaznu.lucene.constants.Constants;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.util.Random;
@@ -22,22 +22,22 @@ public class MessageIndexerTest {
     private Document document = null;
 
     @Test
-    @Before
+    @BeforeClass
     public void testIndex() throws Exception {
         document = MessageToDocument.createWith(title, body);
-        Assert.assertNotNull("Created document should not be null", document);
+        Assert.assertNotNull(document,"Created document should not be null");
         Assert.assertEquals(body, document.get("body"));
         Assert.assertEquals(title, document.get("title"));
 
     }
 
     @Test
-    @After
+    @AfterClass
     public void testReadIndex() throws Exception {
         indexer.index(true, document); // should create index without any errors
 
         final IndexReader indexReader = indexer.readIndex();
-        Assert.assertNotNull("IndexReader should not be null", indexReader);
+        Assert.assertNotNull(indexReader, "IndexReader should not be null");
 
         FileUtils.deleteQuietly(new File(indexer.getPathToIndexFolder())); // remove indexes
     }

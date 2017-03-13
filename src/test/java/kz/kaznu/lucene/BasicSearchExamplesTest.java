@@ -5,24 +5,26 @@ import kz.kaznu.lucene.index.MessageIndexer;
 import kz.kaznu.lucene.utils.Helper;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.document.Document;
-import org.junit.After;
-import org.junit.Test;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
 
 public class BasicSearchExamplesTest {
     private final Random rnd = new Random(); // to generate safe name for index folder. After tests we removing folders
     private final MessageIndexer indexer = new MessageIndexer(Constants.TMP_DIR + "/tutorial_test" + rnd.nextInt());
-    final ClassLoader classLoader = getClass().getClassLoader();
-    final File file = new File(classLoader.getResource("tutorial.json").getFile());
-    final List<Document> documents;
+    private final ClassLoader classLoader = getClass().getClassLoader();
+    private final File file = new File(classLoader.getResource("tutorial.json").getFile());
 
-    public BasicSearchExamplesTest() throws FileNotFoundException {
+    private List<Document> documents;
+
+    @BeforeClass
+    public void init() throws FileNotFoundException {
         documents = Helper.readDocumentsFromFile(file);
     }
 
@@ -58,7 +60,7 @@ public class BasicSearchExamplesTest {
         searchWith.fuzzySearch("дорога");
     }
 
-    @After
+    @AfterClass
     public void removeIndexes() {
         FileUtils.deleteQuietly(new File(indexer.getPathToIndexFolder())); // remove indexes
     }

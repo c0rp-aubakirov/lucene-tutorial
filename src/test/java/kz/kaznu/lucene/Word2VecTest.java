@@ -2,8 +2,8 @@ package kz.kaznu.lucene;
 
 import kz.kaznu.lucene.utils.Word2Vec;
 import org.apache.commons.math3.linear.ArrayRealVector;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class Word2VecTest {
     private final Map<String, ArrayRealVector> word2vec = new HashMap<>();
 
-    @Before
+    @BeforeClass
     public void word2vecRead() throws URISyntaxException, IOException {
         word2vec.putAll(Word2Vec.word2vecRead());
     }
