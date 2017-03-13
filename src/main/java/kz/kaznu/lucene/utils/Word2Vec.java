@@ -7,8 +7,8 @@ import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -37,5 +37,43 @@ public class Word2Vec {
             });
         }
         return word2vec;
+    }
+
+    /**
+     * Extract most similar words from word2vec map
+     * <p>Method uses cosine distance as measure between vectors (words)</p>
+     *
+     * @param word2vec should map of strings and vectors
+     * @param query should be presented in word2vec map
+     * @param threshold cosine distance threshold
+     * @return list of words similar to <b>query</b>
+     */
+    public static List<String> getMostWordsSimilarByCosineDistance(final Map<String, ArrayRealVector> word2vec, final String query, final Double threshold) {
+        final ArrayRealVector arrayRealVector = word2vec.get(query);
+        final Map<Double, String> sortedCosineDistances = new TreeMap<>((Comparator) (o1, o2) -> ((Double)o2).compareTo((Double)(o1)));
+        if (arrayRealVector != null) {
+            word2vec.entrySet()
+                    .stream()
+                    .filter(w -> !w.getKey().equals(query))
+                    .filter(w -> w.getValue().getNorm() != 0)
+                    .forEach(w -> {
+                        ArrayRealVector value = w.getValue();
+                        double cosine = value.cosine(arrayRealVector);
+                                 sortedCosineDistances.put(cosine, w.getKey());
+                             }
+                    );
+        }
+
+        return sortedCosineDistances.entrySet()
+                .stream()
+                .filter(e -> e.getKey() > threshold)
+                .map(doubleStringEntry -> doubleStringEntry.getValue())
+                .collect(
+                        Collectors.toList());
+    }
+
+    public static List<String> getMostWordsSimilarByCosineDistance(final Map<String, ArrayRealVector> word2vec, final String query) {
+        final double defaultThreshold = 0.7D;
+        return getMostWordsSimilarByCosineDistance(word2vec, query, defaultThreshold);
     }
 }
